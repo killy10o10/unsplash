@@ -10,7 +10,7 @@ const background = async () => {
   );
   const data = await response.json();
   body.style.backgroundImage = `url('${data.urls.full}')`;
-  author.innerText = `Image Credit: ${data.user.name}`;
+  author.innerText = `📷: ${data.user.name}`;
   if (data.urls.full) {
     console.log(data.urls.full);
   }
@@ -30,8 +30,15 @@ fetch('https://api.coingecko.com/api/v3/coins/internet-computer')
     return res.json();
   })
   .then((data) => {
-    console.log(data);
-    cryptoInfo.innerHTML = `<img src="${data.image.small}" alt="dogecoin"> <span>${data.name}</span>`;
+    cryptoInfo.innerHTML = `<div id="crypto-top">
+    <img src="${data.image.small}" alt="dogecoin"> <span>${data.name}</span>
+  </div>
+  <div id="crypto-bottom">
+  <div class="price"><span> 🎯:</span><span>$${data.market_data.current_price.usd}</span></div>
+  <div class="price"><span> 👆🏽: </span><span>$${data.market_data.high_24h.usd}</span></div>
+  <div class="price"><span> 👇🏽: </span><span>$${data.market_data.low_24h.usd}</span></div>
+</div>
+  `;
   })
   .catch((err) => console.error(err));
 
@@ -47,7 +54,15 @@ form.addEventListener('submit', (e) => {
       return res.json();
     })
     .then((data) => {
-      cryptoInfo.innerHTML = `<img src="${data.image.small}" alt="dogecoin"> <span>${data.name}</span>`;
+      cryptoInfo.innerHTML = `<div id="crypto-top">
+                                <img src="${data.image.small}" alt="dogecoin"> <span>${data.name}</span>
+                              </div>
+                              <div id="crypto-bottom">
+                              <div class="price"><span> 🎯:</span><span>$${data.market_data.current_price.usd}</span></div>
+                              <div class="price"><span> 👆🏽: </span><span>$${data.market_data.high_24h.usd}</span></div>
+                              <div class="price"><span> 👇🏽: </span><span>$${data.market_data.low_24h.usd}</span></div>
+                            </div>
+                              `;
     })
     .catch((err) => console.error(err));
 });

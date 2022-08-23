@@ -12,7 +12,6 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-image: url('./953897.jpg');
   font-family: 'Ubuntu', sans-serif;
   font-size: 130%;
   color: #fff;
@@ -25,9 +24,45 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+#widgets {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#crypto-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
 }
 
 #time {
-  font-size: 400%;
+  font-size: 100px;
 }
+
+#form {
+  display: flex;
+  justify-content: center;
+}
+
+#form input {
+  border: none;
+  outline: none;
+  border-bottom: 3px solid #fff;
+  background: transparent;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 20px;
+  color: #fff;
+}
+
+#time-div {
+  text-align: center;
+  align-self: center;
+}
+
+/* https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyMTEwMjl8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjI4NDE2NzA&ixlib=rb-1.2.1&q=80 */

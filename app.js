@@ -10,14 +10,14 @@ const background = async () => {
   );
   const data = await response.json();
   body.style.backgroundImage = `url('${data.urls.full}')`;
-  author.innerText = `📷: ${data.user.name}`;
+  author.innerHTML = `<div id="camera"><img src="https://emojicdn.elk.sh/📷" alt="" /> <span>${data.user.name}</span></div>`;
   if (data.urls.full) {
     console.log(data.urls.full);
   }
 };
 
 background().catch(() => {
-  body.style.backgroundImage = `url('./953897.jpg')`;
+  body.style.backgroundImage = `url('./unsplash.jpg')`;
   console.error("sorry couldn't fetch the image😔");
 });
 
@@ -31,12 +31,12 @@ fetch('https://api.coingecko.com/api/v3/coins/internet-computer')
   })
   .then((data) => {
     cryptoInfo.innerHTML = `<div id="crypto-top">
-    <img src="${data.image.small}" alt="dogecoin"> <span>${data.name}</span>
+    <img src="${data.image.small}" alt="coin"> <span>${data.name}</span>
   </div>
   <div id="crypto-bottom">
-  <div class="price"><span> 🎯:</span><span>$${data.market_data.current_price.usd}</span></div>
-  <div class="price"><span> 👆🏽: </span><span>$${data.market_data.high_24h.usd}</span></div>
-  <div class="price"><span> 👇🏽: </span><span>$${data.market_data.low_24h.usd}</span></div>
+  <div class="price"><img src="https://emojicdn.elk.sh/🎯" alt="" />: <span>$${data.market_data.current_price.usd}</span></div>
+  <div class="price"><img src="https://emojicdn.elk.sh/👆🏽" alt="" />: <span>$${data.market_data.high_24h.usd}</span></div>
+  <div class="price"><img src="https://emojicdn.elk.sh/👇🏽" alt="" />: <span>$${data.market_data.low_24h.usd}</span></div>
 </div>
   `;
   })
@@ -55,14 +55,46 @@ form.addEventListener('submit', (e) => {
     })
     .then((data) => {
       cryptoInfo.innerHTML = `<div id="crypto-top">
-                                <img src="${data.image.small}" alt="dogecoin"> <span>${data.name}</span>
+                                <img src="${data.image.small}" alt="coin"> <span>${data.name}</span>
                               </div>
                               <div id="crypto-bottom">
-                              <div class="price"><span> 🎯:</span><span>$${data.market_data.current_price.usd}</span></div>
-                              <div class="price"><span> 👆🏽: </span><span>$${data.market_data.high_24h.usd}</span></div>
-                              <div class="price"><span> 👇🏽: </span><span>$${data.market_data.low_24h.usd}</span></div>
-                            </div>
+                                <div class="price"><img src="https://emojicdn.elk.sh/🎯" alt="" />: <span>$${data.market_data.current_price.usd}</span></div>
+                                <div class="price"><img src="https://emojicdn.elk.sh/👆🏽" alt="" />: <span>$${data.market_data.high_24h.usd}</span></div>
+                                <div class="price"><img src="https://emojicdn.elk.sh/👇🏽" alt="" />: <span>$${data.market_data.low_24h.usd}</span></div>
+                              </div>
                               `;
+    })
+    .catch((err) => console.error(err));
+});
+
+// Get Weather data
+navigator.geolocation.getCurrentPosition((position) => {
+  fetch(
+    `https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric`
+  )
+    .then((res) => {
+      if (!res.ok) {
+        throw Error('Weather data not available');
+      }
+      return res.json();
+    })
+    .then((data) => {
+      data.weather.map((info) => {
+        const iconUrl = `http://openweathermap.org/img/wn/${info.icon}@2x.png`;
+        document.getElementById('weather-info').innerHTML = `
+        <div class="temperature">
+          
+                                          <span>${Math.round(
+                                            data.main.temp
+                                          )}º</span>
+                                          <img src=${iconUrl} /> 
+        </div>
+        <div class="city">
+                                          <p>${data.name}</p>
+        </div>
+                            
+                            `;
+      });
     })
     .catch((err) => console.error(err));
 });
@@ -70,11 +102,10 @@ form.addEventListener('submit', (e) => {
 // Display Time
 const tick = () => {
   const now = new Date();
-  const hour = now.getHours() === 0 ? `0${now.getHours()}` : now.getHours();
-  const min = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
   const timeIndicator = document.getElementById('time');
-
-  timeIndicator.innerHTML = `${hour}:${min}`;
+  timeIndicator.innerText = now.toLocaleTimeString('en-GB', {
+    timeStyle: 'short',
+  });
 };
 
 setInterval(tick, 1000);

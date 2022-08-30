@@ -17,6 +17,7 @@ body {
   color: #fff;
   text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
     0px 18px 23px rgba(0, 0, 0, 0.1);
+  background-color: black;
 }
 
 #main {
@@ -36,9 +37,32 @@ body {
 #crypto-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: baseline;
   height: 143px;
 }
+
+#weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.temperature {
+  display: flex;
+  align-items: center;
+  font-size: 200%;
+}
+
+#weather-info img {
+  filter: drop-shadow(5px 5px 10px rgba(0, 0, 0));
+  margin-left: -15px;
+}
+
+.city {
+  margin-top: -20px;
+}
+
 #crypto-top {
   display: flex;
   align-items: center;
@@ -56,6 +80,9 @@ body {
   align-items: center;
   text-align: center;
   gap: 10px;
+}
+.price img {
+  width: 15%;
 }
 
 #time {
@@ -85,6 +112,13 @@ body {
 
 #image-author {
   padding: 5px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#camera img {
+  width: 9%;
 }
 
 /* https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyMTEwMjl8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjI4NDE2NzA&ixlib=rb-1.2.1&q=80 */

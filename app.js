@@ -4,13 +4,14 @@ const cryptoInfo = document.querySelector('#crypto-info');
 const form = document.querySelector('#form');
 
 // Get Background from Unsplash
+
 const background = async () => {
   const response = await fetch(
-    'https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query'
+    'https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=landscape'
   );
   const data = await response.json();
   body.style.backgroundImage = `url('${data.urls.full}')`;
-  author.innerHTML = `<div id="camera"><img src="https://emojicdn.elk.sh/📷" alt="" /> <span>${data.user.name}</span></div>`;
+  author.innerHTML = `<div id="camera"><img src="https://emojicdn.elk.sh/📷" alt="" /> <a href="${data.user.links.html}" target="_blank">${data.user.name}</a></div>`;
   if (data.urls.full) {
     console.log(data.urls.full);
   }

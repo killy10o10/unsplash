@@ -7,9 +7,10 @@ const form = document.querySelector('#form');
 
 const background = async () => {
   const response = await fetch(
-    'https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=landscape'
+    'https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=people'
   );
   const data = await response.json();
+  console.log(data)
   body.style.backgroundImage = `url('${data.urls.full}')`;
   author.innerHTML = `<div id="camera"><img src="https://emojicdn.elk.sh/📷" alt="" /> <a href="${data.user.links.html}" target="_blank">${data.user.name}</a></div>`;
   if (data.urls.full) {

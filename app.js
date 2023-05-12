@@ -5,10 +5,14 @@ const form = document.querySelector('#form');
 
 // Get Background from Unsplash
 
+const CACHE_EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
 const background = async () => {
-  // Check if the image is already cached
   const cachedImage = localStorage.getItem('backgroundImage');
-  if (cachedImage) {
+  const cachedTimestamp = localStorage.getItem('backgroundImageTimestamp');
+  const currentTime = new Date().getTime();
+
+  if (cachedImage && cachedTimestamp && currentTime - cachedTimestamp < CACHE_EXPIRATION_TIME) {
     body.style.backgroundImage = `url('${cachedImage}')`;
     return;
   }
@@ -21,12 +25,8 @@ const background = async () => {
   body.style.backgroundImage = `url('${data.urls.full}')`;
   author.innerHTML = `<div id="camera"><img src="https://emojicdn.elk.sh/📷" alt="" /> <a href="${data.user.links.html}" target="_blank">${data.user.name}</a></div>`;
 
-  // Cache the image
   localStorage.setItem('backgroundImage', data.urls.full);
-
-  if (data.urls.full) {
-    console.log(data.urls.full);
-  }
+  localStorage.setItem('backgroundImageTimestamp', currentTime);
 };
 
 background().catch(() => {

@@ -6,6 +6,13 @@ const form = document.querySelector('#form');
 // Get Background from Unsplash
 
 const background = async () => {
+  // Check if the image is already cached
+  const cachedImage = localStorage.getItem('backgroundImage');
+  if (cachedImage) {
+    body.style.backgroundImage = `url('${cachedImage}')`;
+    return;
+  }
+
   const response = await fetch(
     'https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=people'
   );
@@ -13,15 +20,25 @@ const background = async () => {
   console.log(data)
   body.style.backgroundImage = `url('${data.urls.full}')`;
   author.innerHTML = `<div id="camera"><img src="https://emojicdn.elk.sh/📷" alt="" /> <a href="${data.user.links.html}" target="_blank">${data.user.name}</a></div>`;
+
+  // Cache the image
+  localStorage.setItem('backgroundImage', data.urls.full);
+
   if (data.urls.full) {
     console.log(data.urls.full);
   }
 };
 
 background().catch(() => {
-  body.style.backgroundImage = `url('./unsplash.jpg')`;
-  console.error("sorry couldn't fetch the image😔");
+  const cachedImage = localStorage.getItem('backgroundImage');
+  if (cachedImage) {
+    body.style.backgroundImage = `url('${cachedImage}')`;
+  } else {
+    body.style.backgroundImage = `url('./unsplash.jpg')`;
+    console.error("Sorry, couldn't fetch the image. 😔");
+  }
 });
+
 
 // Get Crypto info on page load
 fetch('https://api.coingecko.com/api/v3/coins/internet-computer')

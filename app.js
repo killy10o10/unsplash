@@ -11,17 +11,21 @@ const background = async () => {
   const cachedImage = localStorage.getItem('backgroundImage');
   const cachedTimestamp = localStorage.getItem('backgroundImageTimestamp');
   const currentTime = new Date().getTime();
+  console.log(currentTime);
 
-  if (cachedImage && cachedTimestamp && currentTime - cachedTimestamp < CACHE_EXPIRATION_TIME) {
+  if (
+    cachedImage &&
+    cachedTimestamp &&
+    currentTime - cachedTimestamp < CACHE_EXPIRATION_TIME
+  ) {
     body.style.backgroundImage = `url('${cachedImage}')`;
     return;
   }
 
   const response = await fetch(
-    'https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=people'
+    'https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature'
   );
   const data = await response.json();
-  console.log(data)
   body.style.backgroundImage = `url('${data.urls.full}')`;
   author.innerHTML = `<div id="camera"><img src="https://emojicdn.elk.sh/📷" alt="" /> <a href="${data.user.links.html}" target="_blank">${data.user.name}</a></div>`;
 
@@ -38,7 +42,6 @@ background().catch(() => {
     console.error("Sorry, couldn't fetch the image. 😔");
   }
 });
-
 
 // Get Crypto info on page load
 fetch('https://api.coingecko.com/api/v3/coins/internet-computer')
@@ -73,14 +76,15 @@ form.addEventListener('submit', (e) => {
       return res.json();
     })
     .then((data) => {
-      cryptoInfo.innerHTML = `<div id="crypto-top">
-                                <img src="${data.image.small}" alt="coin"> <span>${data.name}</span>
-                              </div>
-                              <div id="crypto-bottom">
-                                <div class="price"><img src="https://emojicdn.elk.sh/🎯" alt="" />: <span>$${data.market_data.current_price.usd}</span></div>
-                                <div class="price"><img src="https://emojicdn.elk.sh/👆🏽" alt="" />: <span>$${data.market_data.high_24h.usd}</span></div>
-                                <div class="price"><img src="https://emojicdn.elk.sh/👇🏽" alt="" />: <span>$${data.market_data.low_24h.usd}</span></div>
-                              </div>
+      cryptoInfo.innerHTML = `
+                  <div id="crypto-top">
+                    <img src="${data.image.small}" alt="coin"> <span>${data.name}</span>
+                  </div>
+                  <div id="crypto-bottom">
+                    <div class="price"><img src="https://emojicdn.elk.sh/🎯" alt="" />: <span>$${data.market_data.current_price.usd}</span></div>
+                    <div class="price"><img src="https://emojicdn.elk.sh/👆🏽" alt="" />: <span>$${data.market_data.high_24h.usd}</span></div>
+                    <div class="price"><img src="https://emojicdn.elk.sh/👇🏽" alt="" />: <span>$${data.market_data.low_24h.usd}</span></div>
+                  </div>
                               `;
     })
     .catch((err) => console.error(err));
@@ -102,17 +106,13 @@ navigator.geolocation.getCurrentPosition((position) => {
         const iconUrl = `http://openweathermap.org/img/wn/${info.icon}@2x.png`;
         document.getElementById('weather-info').innerHTML = `
         <div class="temperature">
-          
-                                          <span>${Math.round(
-                                            data.main.temp
-                                          )}º</span>
-                                          <img src=${iconUrl} /> 
+          <span>${Math.round(data.main.temp)}º</span>
+          <img src=${iconUrl} /> 
         </div>
         <div class="city">
-                                          <p>${data.name}</p>
-        </div>
-                            
-                            `;
+          <p>${data.name}</p>
+        </div>                     
+        `;
       });
     })
     .catch((err) => console.error(err));
